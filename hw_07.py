@@ -104,10 +104,13 @@ class AddressBook(UserDict):
 
             birthday_this_year = record.birthday.value.replace(year=today.year)
 
+            if birthday_this_year < today:
+                birthday_this_year = birthday_this_year.replace(year=today.year + 1)
+
             if birthday_this_year.weekday() >= 5:
                 birthday_this_year += timedelta(days=(7 - birthday_this_year.weekday()))
 
-            if birthday_this_year < today or birthday_this_year - today > timedelta(days=7):
+            if birthday_this_year - today > timedelta(days=7):
                 continue
 
             upcoming.append({
